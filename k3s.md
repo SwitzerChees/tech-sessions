@@ -15,8 +15,8 @@ multipass stop <instance-name>
 multipass start <instance-name>
 # Delete instance
 multipass delete <instance-name>
-# Cleanup deletes instances
-multipass purge <instance-name>
+# Cleanup deleted instances
+multipass purge
 ```
 
 ### Install k3s Kubernetes (Single-Node)
