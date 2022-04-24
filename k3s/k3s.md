@@ -37,7 +37,7 @@ https://rancher.com/docs/k3s/latest/en/installation/install-options/
 # ==== FIRST MASTER NODE ====
 # Install k3s as single node setup
 INSTALL_K3S_EXEC='server --cluster-init'
-K3S_TOKEN='MY-TOKEN'
+K3S_TOKEN='supersecret123'
 curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN INSTALL_K3S_EXEC=$INSTALL_K3S_EXEC sh -
 
 
@@ -51,7 +51,7 @@ curl -sfL https://get.k3s.io | K3S_TOKEN=$K3S_TOKEN K3S_URL=$K3S_URL INSTALL_K3S
 
 # ==== ADDITIONAL WORKER NODES ====
 # Set needed env variables to join additional master node
-K3S_TOKEN='MY-TOKEN'
+K3S_TOKEN='supersecret123'
 K3S_URL='https://<master-node-ip>:6443'
 INSTALL_K3S_EXEC='agent'
 # Add additional master node
@@ -94,6 +94,20 @@ cat /var/lib/rancher/k3s/server/node-token
 ```bash
 # kill actual k3s process
 /usr/local/bin/k3s-killall.sh
-# delete actual k3s installation
+# delete actual k3s installation (server)
 /usr/local/bin/k3s-uninstall.sh
+# delete actual k3s installation (agent)
+/usr/local/bin/k3s-agent-uninstall.sh
+```
+
+### Auto Upgrade K3S
+https://rancher.com/docs/k3s/latest/en/upgrades/automated/
+
+Channels: https://update.k3s.io/v1-release/channels
+
+```bash
+# Install upgrade controller in system-upgrade namespace
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
+# Apply the service plans
+kubectl apply -f upgrade-plans.yml
 ```
